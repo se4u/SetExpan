@@ -4,10 +4,10 @@ __description__: A bunch of utility functions
 __latest_update__: 08/31/2017
 '''
 from collections import defaultdict
-import set_expan
-import eid_pair_TFIDF_selection
-import extract_seed_edges
-import extract_entity_pair_skipgrams
+# import set_expan
+# import eid_pair_TFIDF_selection
+# import extract_seed_edges
+# import extract_entity_pair_skipgrams
 
 def loadEidToEntityMap(filename):
   eid2ename = {}

@@ -16,7 +16,7 @@ TOP_K_SG = 200
 # each ranking pass.
 TOP_K_EID = 30
 # MAX_ITER_SET is the maximum number of expansion iterations
-MAX_ITER_SET = 10
+# MAX_ITER_SET = 10
 # SAMPLES is the ensemble number
 SAMPLES = 30
 # THRES_MRR is the threshold that determines whether a new entity will be included in the set or not
@@ -84,7 +84,7 @@ def getFeatureSim(eid, seed, weightByEidAndFeatureMap, features):
 
 # expand the set of seedEntities and return eids by order, excluding seedEntities (original children)
 def setExpan(seedEidsWithConfidence, negativeSeedEids, eid2patterns, pattern2eids, eidAndPattern2strength,
-             eid2types, type2eids, eidAndType2strength, eid2ename, FLAGS_VERBOSE=False, FLAGS_DEBUG=False):
+             eid2types, type2eids, eidAndType2strength, eid2ename, FLAGS_VERBOSE=False, FLAGS_DEBUG=False, MAX_ITER_SET=10):
   ''' Note: currently the confidence score of each entity id is actually not used, just ignore it.
 
   :param seedEidsWithConfidence: a list of [eid (int), confidence_score (float)]
@@ -157,7 +157,7 @@ def setExpan(seedEidsWithConfidence, negativeSeedEids, eid2patterns, pattern2eid
     all_start = time.time()
     eid2mrr = {}
     if FLAGS_DEBUG:
-      print("Start ranking ensemble at iteration %s:" % iters, end=" ")
+      print("Start ranking ensemble at iteration %s:" % iters)
     for i in range(SAMPLES):
       sampledCoreSkipgrams = getSampledCoreSkipgrams(coreSkipgrams)
       combinedSgSimByCandidateEid = {}
@@ -195,7 +195,8 @@ def setExpan(seedEidsWithConfidence, negativeSeedEids, eid2patterns, pattern2eid
 
     # Select entities to be added into the set
     eid_incremental = []
-    max_mrr = max(eid2mrr.values())
+    if len(eid2mrr) > 0:
+      max_mrr = max(eid2mrr.values())
     for ele in sorted(eid2mrr.items(), key=lambda x:-x[1]):
       eid = ele[0]
       mrr_score = ele[1]

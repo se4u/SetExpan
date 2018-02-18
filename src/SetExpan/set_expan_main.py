@@ -8,10 +8,10 @@ import set_expan
 import time
 
 ## Setting global versions
-FLAGS_USE_TYPE=True
+FLAGS_USE_TYPE=False
 
 ## Loading Corpus
-data = "wiki"
+data = "tac2017"
 print('dataset:%s' % data)
 folder = '../../data/'+data+'/intermediate/'
 start = time.time()
